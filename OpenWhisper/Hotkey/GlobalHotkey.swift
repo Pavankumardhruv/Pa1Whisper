@@ -4,17 +4,28 @@ import ApplicationServices
 final class GlobalHotkey {
     private var globalMonitor: Any?
     private var localMonitor: Any?
-    private var isPressed = false
+    private var isRightPressed = false
+    private var isLeftPressed = false
 
-    // Right Option key = keyCode 61
-    private let targetKeyCode: UInt16 = 61
+    // Right Option = keyCode 61, Left Option = keyCode 58
+    private let rightOptionKeyCode: UInt16 = 61
+    private let leftOptionKeyCode: UInt16 = 58
 
-    private let onPress: () -> Void
-    private let onRelease: () -> Void
+    private let onRightPress: () -> Void
+    private let onRightRelease: () -> Void
+    private let onLeftPress: () -> Void
+    private let onLeftRelease: () -> Void
 
-    init(onPress: @escaping () -> Void, onRelease: @escaping () -> Void) {
-        self.onPress = onPress
-        self.onRelease = onRelease
+    init(
+        onRightPress: @escaping () -> Void,
+        onRightRelease: @escaping () -> Void,
+        onLeftPress: @escaping () -> Void,
+        onLeftRelease: @escaping () -> Void
+    ) {
+        self.onRightPress = onRightPress
+        self.onRightRelease = onRightRelease
+        self.onLeftPress = onLeftPress
+        self.onLeftRelease = onLeftRelease
     }
 
     /// Check and optionally prompt for Accessibility permissions.
@@ -79,17 +90,24 @@ final class GlobalHotkey {
     }
 
     private func handleFlagsChanged(_ event: NSEvent) {
-        // Only respond to Right Option key
-        guard event.keyCode == targetKeyCode else { return }
-
         let optionPressed = event.modifierFlags.contains(.option)
 
-        if optionPressed && !isPressed {
-            isPressed = true
-            onPress()
-        } else if !optionPressed && isPressed {
-            isPressed = false
-            onRelease()
+        if event.keyCode == rightOptionKeyCode {
+            if optionPressed && !isRightPressed {
+                isRightPressed = true
+                onRightPress()
+            } else if !optionPressed && isRightPressed {
+                isRightPressed = false
+                onRightRelease()
+            }
+        } else if event.keyCode == leftOptionKeyCode {
+            if optionPressed && !isLeftPressed {
+                isLeftPressed = true
+                onLeftPress()
+            } else if !optionPressed && isLeftPressed {
+                isLeftPressed = false
+                onLeftRelease()
+            }
         }
     }
 

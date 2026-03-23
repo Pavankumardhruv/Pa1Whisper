@@ -12,6 +12,12 @@ struct FlowBarView: View {
                 recordingContent
             case .transcribing:
                 transcribingContent
+            case .voiceRecording:
+                voiceRecordingContent
+            case .voiceThinking:
+                voiceThinkingContent
+            case .voiceSpeaking:
+                voiceSpeakingContent
             }
         }
         .padding(.horizontal, isIdle ? 10 : 12)
@@ -38,6 +44,10 @@ struct FlowBarView: View {
         appState.recordingState == .idle
     }
 
+    private var purpleColor: Color {
+        Color(red: 0.6, green: 0.3, blue: 0.9)
+    }
+
     // MARK: - Idle
 
     private var idleContent: some View {
@@ -58,7 +68,7 @@ struct FlowBarView: View {
                     .font(.system(size: 9, weight: .medium))
                     .foregroundStyle(.orange.opacity(0.7))
             } else {
-                Text("Right ⌥")
+                Text(appState.voiceAssistantEnabled ? "Right ⌥ · Left ⌥" : "Right ⌥")
                     .font(.system(size: 9, weight: .medium))
                     .foregroundStyle(.white.opacity(0.45))
             }
@@ -91,6 +101,51 @@ struct FlowBarView: View {
             Text("Transcribing...")
                 .font(.system(size: 10, weight: .medium))
                 .foregroundStyle(.white.opacity(0.7))
+        }
+    }
+
+    // MARK: - Voice Recording
+
+    private var voiceRecordingContent: some View {
+        HStack(spacing: 8) {
+            Circle()
+                .fill(purpleColor)
+                .frame(width: 5, height: 5)
+                .modifier(PulseAnimation())
+
+            VoiceDots(level: appState.audioLevel)
+
+            Text("Ask me...")
+                .font(.system(size: 10, weight: .medium))
+                .foregroundStyle(.white.opacity(0.6))
+        }
+    }
+
+    // MARK: - Voice Thinking
+
+    private var voiceThinkingContent: some View {
+        HStack(spacing: 6) {
+            BouncingDots()
+
+            Text("Thinking...")
+                .font(.system(size: 10, weight: .medium))
+                .foregroundStyle(purpleColor.opacity(0.9))
+        }
+    }
+
+    // MARK: - Voice Speaking
+
+    private var voiceSpeakingContent: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "speaker.wave.2.fill")
+                .font(.system(size: 9))
+                .foregroundStyle(purpleColor)
+
+            Text(appState.lastAssistantResponse)
+                .font(.system(size: 10, weight: .medium))
+                .foregroundStyle(.white.opacity(0.8))
+                .lineLimit(2)
+                .frame(maxWidth: 300)
         }
     }
 
