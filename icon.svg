@@ -1,50 +1,75 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1a1a2e"/>
-      <stop offset="100%" stop-color="#16213e"/>
+      <stop offset="0%" stop-color="#FFF8F0"/>
+      <stop offset="100%" stop-color="#FFF0E0"/>
     </linearGradient>
   </defs>
 
-  <!-- Background rounded square -->
+  <!-- Warm cream background rounded square -->
   <rect x="0" y="0" width="1024" height="1024" rx="220" ry="220" fill="url(#bg)"/>
 
-  <!-- Bird body - simple round shape -->
-  <ellipse cx="440" cy="600" rx="180" ry="160" fill="#e8e8e8" stroke="#333" stroke-width="6"/>
+  <!-- Doodly bird body — wobbly hand-drawn ellipse using path -->
+  <path d="M 280 600 C 270 500, 350 420, 450 415 C 550 410, 640 460, 650 540 C 660 620, 620 720, 520 740 C 420 760, 290 700, 280 600 Z"
+        fill="none" stroke="#2D2D2D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- Bird wing -->
-  <ellipse cx="360" cy="580" rx="90" ry="50" fill="#ccc" stroke="#333" stroke-width="4" transform="rotate(-15,360,580)"/>
+  <!-- Bird body fill (slightly offset for doodle feel) -->
+  <path d="M 285 598 C 275 502, 355 425, 452 418 C 548 412, 638 462, 648 538 C 658 618, 618 718, 518 738 C 418 758, 295 698, 285 598 Z"
+        fill="#F5F5F5" stroke="none"/>
 
-  <!-- Bird head -->
-  <circle cx="530" cy="460" r="100" fill="#e8e8e8" stroke="#333" stroke-width="6"/>
+  <!-- Redraw outline on top -->
+  <path d="M 280 600 C 270 500, 350 420, 450 415 C 550 410, 640 460, 650 540 C 660 620, 620 720, 520 740 C 420 760, 290 700, 280 600 Z"
+        fill="none" stroke="#2D2D2D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- Eye -->
-  <circle cx="560" cy="445" r="18" fill="#333"/>
-  <circle cx="566" cy="439" r="6" fill="white"/>
+  <!-- Doodly head — wobbly circle -->
+  <path d="M 510 380 C 540 320, 620 310, 650 350 C 680 390, 680 450, 650 480 C 620 510, 540 520, 510 480 C 480 440, 480 400, 510 380 Z"
+        fill="#F5F5F5" stroke="#2D2D2D" stroke-width="5" stroke-linecap="round"/>
 
-  <!-- Beak -->
-  <polygon points="630,460 680,450 630,475" fill="#f4a261" stroke="#333" stroke-width="3"/>
+  <!-- Eye — simple dot with highlight -->
+  <circle cx="600" cy="400" r="14" fill="#2D2D2D"/>
+  <circle cx="605" cy="395" r="5" fill="white"/>
 
-  <!-- Tail feathers -->
-  <path d="M 270 580 Q 180 520 200 440" fill="none" stroke="#ccc" stroke-width="12" stroke-linecap="round"/>
-  <path d="M 280 600 Q 170 560 180 480" fill="none" stroke="#ddd" stroke-width="10" stroke-linecap="round"/>
-  <path d="M 275 620 Q 160 600 160 520" fill="none" stroke="#bbb" stroke-width="8" stroke-linecap="round"/>
+  <!-- Tiny eyebrow doodle -->
+  <path d="M 585 378 C 595 370, 610 372, 618 376" fill="none" stroke="#2D2D2D" stroke-width="3" stroke-linecap="round"/>
 
-  <!-- Legs -->
-  <line x1="400" y1="750" x2="380" y2="830" stroke="#f4a261" stroke-width="8" stroke-linecap="round"/>
-  <line x1="380" y1="830" x2="350" y2="830" stroke="#f4a261" stroke-width="8" stroke-linecap="round"/>
-  <line x1="380" y1="830" x2="400" y2="840" stroke="#f4a261" stroke-width="6" stroke-linecap="round"/>
-  <line x1="480" y1="750" x2="500" y2="830" stroke="#f4a261" stroke-width="8" stroke-linecap="round"/>
-  <line x1="500" y1="830" x2="470" y2="830" stroke="#f4a261" stroke-width="8" stroke-linecap="round"/>
-  <line x1="500" y1="830" x2="520" y2="840" stroke="#f4a261" stroke-width="6" stroke-linecap="round"/>
+  <!-- Beak — sketchy triangle -->
+  <path d="M 660 410 L 720 395 L 665 430 Z" fill="#F4A261" stroke="#2D2D2D" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- Speech bubble -->
-  <path d="M 620 340 Q 620 240 720 240 L 870 240 Q 940 240 940 310 L 940 380 Q 940 440 870 440 L 700 440 L 640 490 L 660 440 L 650 440 Q 620 440 620 380 Z" fill="white" stroke="#333" stroke-width="5"/>
+  <!-- Wing — doodly curve -->
+  <path d="M 340 540 C 300 510, 290 470, 320 450 C 350 430, 390 450, 400 490 C 410 530, 380 560, 340 540 Z"
+        fill="#E8E8E8" stroke="#2D2D2D" stroke-width="4" stroke-linecap="round"/>
 
-  <!-- "Pa1" text in speech bubble -->
-  <text x="780" y="365" font-family="Arial, Helvetica, sans-serif" font-size="120" font-weight="bold" fill="#1a1a2e" text-anchor="middle">Pa1</text>
+  <!-- Tail feathers — loose sketchy strokes -->
+  <path d="M 300 560 C 230 520, 210 460, 230 400" fill="none" stroke="#2D2D2D" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 290 580 C 210 550, 190 490, 200 430" fill="none" stroke="#2D2D2D" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M 285 600 C 195 580, 175 520, 185 460" fill="none" stroke="#2D2D2D" stroke-width="3" stroke-linecap="round"/>
 
-  <!-- Small sound waves from beak -->
-  <path d="M 690 440 Q 710 430 700 415" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round"/>
-  <path d="M 700 445 Q 725 430 715 410" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round"/>
+  <!-- Legs — wobbly sticks -->
+  <path d="M 430 735 C 425 770, 420 800, 410 830" fill="none" stroke="#F4A261" stroke-width="5" stroke-linecap="round"/>
+  <path d="M 410 830 C 395 835, 380 830, 375 828" fill="none" stroke="#F4A261" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 410 830 C 420 838, 430 835, 435 832" fill="none" stroke="#F4A261" stroke-width="4" stroke-linecap="round"/>
+
+  <path d="M 510 735 C 515 770, 520 800, 525 830" fill="none" stroke="#F4A261" stroke-width="5" stroke-linecap="round"/>
+  <path d="M 525 830 C 510 835, 498 832, 492 828" fill="none" stroke="#F4A261" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 525 830 C 535 838, 545 835, 550 832" fill="none" stroke="#F4A261" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Speech bubble — doodly wobbly shape -->
+  <path d="M 680 310 C 678 240, 720 210, 780 208 L 870 210 C 930 212, 955 240, 953 290 L 950 350 C 948 400, 920 420, 870 422 L 740 420 L 690 470 L 705 420 C 680 418, 678 380, 680 310 Z"
+        fill="white" stroke="#2D2D2D" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- "Pa1" text — handwritten style -->
+  <text x="815" y="340" font-family="'Marker Felt', 'Comic Sans MS', 'Bradley Hand', cursive" font-size="110" font-weight="bold" fill="#2D2D2D" text-anchor="middle">Pa1</text>
+
+  <!-- Sound wave doodles from beak -->
+  <path d="M 725 395 C 738 388, 742 380, 738 370" fill="none" stroke="#2D2D2D" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 735 400 C 752 390, 758 378, 752 365" fill="none" stroke="#2D2D2D" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Tiny music notes floating (doodle detail) -->
+  <text x="755" y="358" font-family="serif" font-size="28" fill="#2D2D2D" opacity="0.4">♪</text>
+  <text x="740" y="340" font-family="serif" font-size="22" fill="#2D2D2D" opacity="0.3">♫</text>
+
+  <!-- Small stars/sparkles around bird (doodle flair) -->
+  <text x="700" y="480" font-size="24" fill="#F4A261" opacity="0.6">✦</text>
+  <text x="330" y="400" font-size="20" fill="#F4A261" opacity="0.5">✦</text>
+  <text x="580" y="760" font-size="18" fill="#F4A261" opacity="0.4">✦</text>
 </svg>

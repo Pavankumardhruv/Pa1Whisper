@@ -16,7 +16,7 @@ let package = Package(
             dependencies: [
                 .product(name: "WhisperKit", package: "WhisperKit"),
             ],
-            path: "OpenWhisper",
+            path: "Pa1Whisper",
             exclude: ["Info.plist", "Pa1Whisper.entitlements"],
             resources: [
                 .process("Resources")
