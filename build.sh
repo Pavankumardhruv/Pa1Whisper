@@ -23,7 +23,7 @@ if [ -d "$BUNDLE_SRC" ]; then
 fi
 
 # Copy Info.plist
-cp OpenWhisper/Info.plist "$APP_DIR/Info.plist"
+cp Pa1Whisper/Info.plist "$APP_DIR/Info.plist"
 
 # Copy any framework dependencies
 if [ -d ".build/arm64-apple-macosx/debug/PackageFrameworks" ]; then

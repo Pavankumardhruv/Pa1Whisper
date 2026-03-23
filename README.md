@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="OpenWhisper/Resources/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="128" height="128" alt="Pa1Whisper icon" />
+  <img src="Pa1Whisper/Resources/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="128" height="128" alt="Pa1Whisper icon" />
 </p>
 
 <h1 align="center">Pa1Whisper</h1>
