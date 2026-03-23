@@ -91,6 +91,22 @@ struct SettingsView: View {
                     .controlSize(.small)
             }
 
+            // Voice Assistant
+            HStack {
+                Label("Voice Assistant", systemImage: "bubble.left.and.bubble.right")
+                Spacer()
+                if appState.voiceAssistantEnabled {
+                    Circle()
+                        .fill(appState.ollamaAvailable ? .green : .red)
+                        .frame(width: 6, height: 6)
+                        .help(appState.ollamaAvailable ? "Ollama connected" : "Ollama not running — required for voice chat")
+                }
+                Toggle("", isOn: $appState.voiceAssistantEnabled)
+                    .toggleStyle(.switch)
+                    .labelsHidden()
+                    .controlSize(.small)
+            }
+
             // Auto-paste
             HStack {
                 Label("Auto-paste", systemImage: "doc.on.clipboard")
@@ -123,18 +139,25 @@ struct SettingsView: View {
 
             Divider()
 
-            // Trigger hotkey
+            // Trigger hotkeys
             HStack {
                 Label("Trigger", systemImage: "keyboard")
                 Spacer()
-                Text("Hold Right ⌥")
-                    .font(.system(.body, design: .monospaced))
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 6)
-                            .fill(.quaternary)
-                    )
+                VStack(alignment: .trailing, spacing: 4) {
+                    Text("Hold Right ⌥  Dictation")
+                        .font(.system(.caption, design: .monospaced))
+                    if appState.voiceAssistantEnabled {
+                        Text("Hold Left ⌥  Voice Chat")
+                            .font(.system(.caption, design: .monospaced))
+                            .foregroundStyle(.purple)
+                    }
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(.quaternary)
+                )
             }
 
             // Model loading status
@@ -310,6 +333,9 @@ struct StatusBadge: View {
         case .idle: .green
         case .recording: .red
         case .transcribing: .orange
+        case .voiceRecording: .purple
+        case .voiceThinking: .purple
+        case .voiceSpeaking: .purple
         }
     }
 
@@ -318,6 +344,9 @@ struct StatusBadge: View {
         case .idle: "Ready"
         case .recording: "Recording"
         case .transcribing: "Processing"
+        case .voiceRecording: "Listening"
+        case .voiceThinking: "Thinking"
+        case .voiceSpeaking: "Speaking"
         }
     }
 }

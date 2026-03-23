@@ -14,6 +14,7 @@ final class AppState {
 
     enum RecordingState: Sendable {
         case idle, recording, transcribing
+        case voiceRecording, voiceThinking, voiceSpeaking
     }
 
     var recordingState: RecordingState = .idle
@@ -34,6 +35,9 @@ final class AppState {
     }
     var autoPasteEnabled: Bool {
         didSet { UserDefaults.standard.set(autoPasteEnabled, forKey: "autoPasteEnabled") }
+    }
+    var voiceAssistantEnabled: Bool {
+        didSet { UserDefaults.standard.set(voiceAssistantEnabled, forKey: "voiceAssistantEnabled") }
     }
     var launchAtLogin: Bool {
         didSet {
@@ -58,6 +62,7 @@ final class AppState {
     var modelLoading: Bool = false
     var modelLoadProgress: Double = 0.0
     var lastTranscription: String = ""
+    var lastAssistantResponse: String = ""
     var lastError: String?
     var accessibilityGranted: Bool = false
     var microphoneGranted: Bool = false
@@ -68,6 +73,7 @@ final class AppState {
     private var transcriber: WhisperTranscriber?
     private var llmCleanup: LLMCleanup?
     private var textInjector: TextInjector?
+    private var voiceAssistant: VoiceAssistant?
     private var hotkey: GlobalHotkey?
     private var flowBarController: FlowBarController?
     private var recordingTimer: Timer?
@@ -80,6 +86,9 @@ final class AppState {
         case .idle: "mic.fill"
         case .recording: "record.circle.fill"
         case .transcribing: "ellipsis.circle.fill"
+        case .voiceRecording: "record.circle.fill"
+        case .voiceThinking: "brain.head.profile"
+        case .voiceSpeaking: "speaker.wave.2.fill"
         }
     }
 
@@ -88,6 +97,9 @@ final class AppState {
         case .idle: .gray
         case .recording: .red
         case .transcribing: .orange
+        case .voiceRecording: .purple
+        case .voiceThinking: .purple
+        case .voiceSpeaking: .purple
         }
     }
 
@@ -98,6 +110,7 @@ final class AppState {
         whisperModel = defaults.string(forKey: "whisperModel") ?? "base"
         language = defaults.string(forKey: "language") ?? "en"
         llmCleanupEnabled = defaults.object(forKey: "llmCleanupEnabled") as? Bool ?? true
+        voiceAssistantEnabled = defaults.object(forKey: "voiceAssistantEnabled") as? Bool ?? true
         flowBarEnabled = defaults.object(forKey: "flowBarEnabled") as? Bool ?? true
         autoPasteEnabled = defaults.object(forKey: "autoPasteEnabled") as? Bool ?? true
         launchAtLogin = SMAppService.mainApp.status == .enabled
@@ -111,6 +124,12 @@ final class AppState {
         transcriber = WhisperTranscriber()
         llmCleanup = LLMCleanup()
         textInjector = TextInjector()
+        voiceAssistant = VoiceAssistant { [weak self] in
+            Task { @MainActor in
+                self?.recordingState = .idle
+                owLog("[Pa1Whisper] Voice assistant finished speaking")
+            }
+        }
         flowBarController = FlowBarController(appState: self)
 
         // Show flow bar immediately (always visible like Wispr Flow)
@@ -128,17 +147,23 @@ final class AppState {
         accessibilityGranted = GlobalHotkey.checkAccessibility(prompt: true)
         owLog("[Pa1Whisper] Accessibility: \(accessibilityGranted)")
 
-        // Register global hotkey
+        // Register global hotkeys
         hotkey = GlobalHotkey(
-            onPress: { [weak self] in
+            onRightPress: { [weak self] in
                 Task { @MainActor in self?.startRecording() }
             },
-            onRelease: { [weak self] in
+            onRightRelease: { [weak self] in
                 Task { @MainActor in self?.stopRecording() }
+            },
+            onLeftPress: { [weak self] in
+                Task { @MainActor in self?.startVoiceRecording() }
+            },
+            onLeftRelease: { [weak self] in
+                Task { @MainActor in self?.stopVoiceRecording() }
             }
         )
         hotkey?.register()
-        owLog("[Pa1Whisper] Hotkey registered (Right Option)")
+        owLog("[Pa1Whisper] Hotkeys registered (Right ⌥ dictation, Left ⌥ voice chat)")
 
         // Load Whisper model
         owLog("[Pa1Whisper] Loading model: \(whisperModel)...")
@@ -262,6 +287,94 @@ final class AppState {
             }
 
             recordingState = .idle
+        }
+    }
+
+    // MARK: - Voice Assistant Flow
+
+    func startVoiceRecording() {
+        guard recordingState == .idle else { return }
+        guard voiceAssistantEnabled else { return }
+        guard modelLoaded else {
+            owLog("[Pa1Whisper] Cannot voice chat — model not loaded yet")
+            return
+        }
+        guard ollamaAvailable else {
+            owLog("[Pa1Whisper] Cannot voice chat — Ollama not available")
+            lastError = "Voice chat requires Ollama"
+            return
+        }
+
+        owLog("[Pa1Whisper] Voice recording started")
+        recordingState = .voiceRecording
+        recordingDuration = 0
+        audioLevel = 0
+        lastError = nil
+        lastAssistantResponse = ""
+
+        audioEngine?.startRecording { [weak self] level in
+            Task { @MainActor in
+                self?.audioLevel = level
+            }
+        }
+
+        recordingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                self?.recordingDuration += 0.1
+            }
+        }
+    }
+
+    func stopVoiceRecording() {
+        guard recordingState == .voiceRecording else { return }
+        recordingState = .voiceThinking
+        owLog("[Pa1Whisper] Voice thinking...")
+
+        recordingTimer?.invalidate()
+        recordingTimer = nil
+
+        guard let audioData = audioEngine?.stopRecording() else {
+            owLog("[Pa1Whisper] No audio captured for voice chat")
+            recordingState = .idle
+            return
+        }
+
+        guard audioData.count > 4800 else {
+            owLog("[Pa1Whisper] Voice audio too short")
+            recordingState = .idle
+            return
+        }
+
+        Task {
+            do {
+                let question = try await transcriber?.transcribe(
+                    audioData: audioData,
+                    language: language
+                ) ?? ""
+
+                let trimmed = question.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !trimmed.isEmpty,
+                      !trimmed.hasPrefix("[BLANK"),
+                      !trimmed.hasPrefix("(BLANK") else {
+                    owLog("[Pa1Whisper] Empty voice question, skipping")
+                    recordingState = .idle
+                    return
+                }
+
+                owLog("[Pa1Whisper] Voice question: \(question)")
+
+                let response = await voiceAssistant?.ask(question: trimmed) ?? "Sorry, no response."
+                owLog("[Pa1Whisper] Voice response: \(response)")
+
+                lastAssistantResponse = response
+                recordingState = .voiceSpeaking
+                voiceAssistant?.speak(text: response)
+                // State goes back to .idle via onSpeechFinished callback
+            } catch {
+                owLog("[Pa1Whisper] Voice chat error: \(error)")
+                lastError = error.localizedDescription
+                recordingState = .idle
+            }
         }
     }
 

@@ -43,11 +43,33 @@ final class TextInjector: @unchecked Sendable {
             owLog("[TextInjector] Posting CGEvent Cmd+V...")
             self.simulateCmdV()
 
-            // Method 2: After a short delay, also try AXUIElement for apps where CGEvent fails
+            // Method 2: After a short delay, try AppleScript paste as fallback (works in Terminal)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-                // Check if clipboard still has our text (if it does, paste probably didn't work)
                 let clipText = NSPasteboard.general.string(forType: .string)
-                owLog("[TextInjector] Post-paste clipboard check: \(clipText == cleaned ? "unchanged (paste may have failed)" : "changed (paste likely worked)")")
+                if clipText == cleaned {
+                    owLog("[TextInjector] CGEvent paste may have failed, trying AppleScript fallback...")
+                    self.appleScriptPaste()
+                } else {
+                    owLog("[TextInjector] Paste succeeded")
+                }
+            }
+        }
+    }
+
+    /// Fallback: use AppleScript to tell System Events to keystroke Cmd+V
+    private func appleScriptPaste() {
+        let script = """
+            tell application "System Events"
+                keystroke "v" using command down
+            end tell
+            """
+        if let appleScript = NSAppleScript(source: script) {
+            var error: NSDictionary?
+            appleScript.executeAndReturnError(&error)
+            if let error {
+                owLog("[TextInjector] AppleScript error: \(error)")
+            } else {
+                owLog("[TextInjector] AppleScript Cmd+V posted")
             }
         }
     }
