@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded square -->
+  <rect x="0" y="0" width="1024" height="1024" rx="220" ry="220" fill="url(#bg)"/>
+
+  <!-- Bird body - simple round shape -->
+  <ellipse cx="440" cy="600" rx="180" ry="160" fill="#e8e8e8" stroke="#333" stroke-width="6"/>
+
+  <!-- Bird wing -->
+  <ellipse cx="360" cy="580" rx="90" ry="50" fill="#ccc" stroke="#333" stroke-width="4" transform="rotate(-15,360,580)"/>
+
+  <!-- Bird head -->
+  <circle cx="530" cy="460" r="100" fill="#e8e8e8" stroke="#333" stroke-width="6"/>
+
+  <!-- Eye -->
+  <circle cx="560" cy="445" r="18" fill="#333"/>
+  <circle cx="566" cy="439" r="6" fill="white"/>
+
+  <!-- Beak -->
+  <polygon points="630,460 680,450 630,475" fill="#f4a261" stroke="#333" stroke-width="3"/>
+
+  <!-- Tail feathers -->
+  <path d="M 270 580 Q 180 520 200 440" fill="none" stroke="#ccc" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 280 600 Q 170 560 180 480" fill="none" stroke="#ddd" stroke-width="10" stroke-linecap="round"/>
+  <path d="M 275 620 Q 160 600 160 520" fill="none" stroke="#bbb" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- Legs -->
+  <line x1="400" y1="750" x2="380" y2="830" stroke="#f4a261" stroke-width="8" stroke-linecap="round"/>
+  <line x1="380" y1="830" x2="350" y2="830" stroke="#f4a261" stroke-width="8" stroke-linecap="round"/>
+  <line x1="380" y1="830" x2="400" y2="840" stroke="#f4a261" stroke-width="6" stroke-linecap="round"/>
+  <line x1="480" y1="750" x2="500" y2="830" stroke="#f4a261" stroke-width="8" stroke-linecap="round"/>
+  <line x1="500" y1="830" x2="470" y2="830" stroke="#f4a261" stroke-width="8" stroke-linecap="round"/>
+  <line x1="500" y1="830" x2="520" y2="840" stroke="#f4a261" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Speech bubble -->
+  <path d="M 620 340 Q 620 240 720 240 L 870 240 Q 940 240 940 310 L 940 380 Q 940 440 870 440 L 700 440 L 640 490 L 660 440 L 650 440 Q 620 440 620 380 Z" fill="white" stroke="#333" stroke-width="5"/>
+
+  <!-- "Pa1" text in speech bubble -->
+  <text x="780" y="365" font-family="Arial, Helvetica, sans-serif" font-size="120" font-weight="bold" fill="#1a1a2e" text-anchor="middle">Pa1</text>
+
+  <!-- Small sound waves from beak -->
+  <path d="M 690 440 Q 710 430 700 415" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 700 445 Q 725 430 715 410" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round"/>
+</svg>
