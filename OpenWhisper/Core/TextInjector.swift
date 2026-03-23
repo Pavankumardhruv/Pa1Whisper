@@ -11,19 +11,15 @@ final class TextInjector: @unchecked Sendable {
         pasteboard.setString(text, forType: .string)
     }
 
-    /// Paste text into the target app
+    /// Type text directly into the target app by simulating keystrokes
     func pasteText(_ text: String, targetApp: NSRunningApplication? = nil) {
-        // Filter junk
         let cleaned = text.trimmingCharacters(in: .whitespacesAndNewlines)
         if cleaned.isEmpty || cleaned.hasPrefix("[BLANK") {
             owLog("[TextInjector] Skipping empty/junk text: \(cleaned)")
             return
         }
 
-        owLog("[TextInjector] Starting paste (\(cleaned.count) chars)")
-
-        // Always put text on clipboard first
-        copyToClipboard(cleaned)
+        owLog("[TextInjector] Starting type (\(cleaned.count) chars)")
 
         // Activate the target app
         if let app = targetApp {
@@ -31,65 +27,28 @@ final class TextInjector: @unchecked Sendable {
             app.activate()
         }
 
-        // Wait for app to come to front, then paste via CGEvent
-        let delay: TimeInterval = 0.5
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [self] in
-            // Log what's actually frontmost right now
-            let frontmost = NSWorkspace.shared.frontmostApplication
-            owLog("[TextInjector] Frontmost at paste time: \(frontmost?.localizedName ?? "none") (pid \(frontmost?.processIdentifier ?? 0))")
-            owLog("[TextInjector] AXIsProcessTrusted: \(AXIsProcessTrusted())")
-
-            // Method 1: CGEvent Cmd+V (works in terminals, editors, everywhere IF accessibility is granted)
-            owLog("[TextInjector] Posting CGEvent Cmd+V...")
-            self.simulateCmdV()
-
-            // Method 2: After a short delay, try AppleScript paste as fallback (works in Terminal)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-                let clipText = NSPasteboard.general.string(forType: .string)
-                if clipText == cleaned {
-                    owLog("[TextInjector] CGEvent paste may have failed, trying AppleScript fallback...")
-                    self.appleScriptPaste()
-                } else {
-                    owLog("[TextInjector] Paste succeeded")
-                }
-            }
+        // Wait for app activation, then type characters directly
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.typeText(cleaned)
         }
     }
 
-    /// Fallback: use AppleScript to tell System Events to keystroke Cmd+V
-    private func appleScriptPaste() {
-        let script = """
-            tell application "System Events"
-                keystroke "v" using command down
-            end tell
-            """
-        if let appleScript = NSAppleScript(source: script) {
-            var error: NSDictionary?
-            appleScript.executeAndReturnError(&error)
-            if let error {
-                owLog("[TextInjector] AppleScript error: \(error)")
-            } else {
-                owLog("[TextInjector] AppleScript Cmd+V posted")
-            }
+    /// Type text character by character using CGEvent key simulation
+    private func typeText(_ text: String) {
+        let src = CGEventSource(stateID: .combinedSessionState)
+
+        for char in text {
+            var utf16 = Array(String(char).utf16)
+            guard let event = CGEvent(keyboardEventSource: src, virtualKey: 0, keyDown: true) else { continue }
+            event.keyboardSetUnicodeString(stringLength: utf16.count, unicodeString: &utf16)
+            event.post(tap: .cghidEventTap)
+
+            let up = CGEvent(keyboardEventSource: src, virtualKey: 0, keyDown: false)
+            up?.post(tap: .cghidEventTap)
+
+            usleep(3_000) // 3ms between keystrokes for reliability
         }
+        owLog("[TextInjector] Typed \(text.count) chars directly")
     }
 
-    /// Simulate Cmd+V via CGEvent
-    private func simulateCmdV() {
-        let vKeyCode: CGKeyCode = 9
-
-        guard let keyDown = CGEvent(keyboardEventSource: nil, virtualKey: vKeyCode, keyDown: true),
-              let keyUp = CGEvent(keyboardEventSource: nil, virtualKey: vKeyCode, keyDown: false) else {
-            owLog("[TextInjector] CGEvent creation failed!")
-            return
-        }
-
-        keyDown.flags = .maskCommand
-        keyUp.flags = .maskCommand
-
-        keyDown.post(tap: .cghidEventTap)
-        usleep(80_000)
-        keyUp.post(tap: .cghidEventTap)
-        owLog("[TextInjector] CGEvent Cmd+V posted")
-    }
 }
