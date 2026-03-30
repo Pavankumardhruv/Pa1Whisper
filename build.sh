@@ -25,6 +25,23 @@ fi
 # Copy Info.plist
 cp Pa1Whisper/Info.plist "$APP_DIR/Info.plist"
 
+# Build AppIcon.icns from the SVG-exported PNGs
+ICONSET_DIR="/tmp/Pa1Whisper.iconset"
+ASSET_DIR="Pa1Whisper/Resources/Assets.xcassets/AppIcon.appiconset"
+mkdir -p "$ICONSET_DIR"
+cp "$ASSET_DIR/icon_16x16.png"    "$ICONSET_DIR/icon_16x16.png"
+cp "$ASSET_DIR/icon_32x32.png"    "$ICONSET_DIR/icon_16x16@2x.png"
+cp "$ASSET_DIR/icon_32x32.png"    "$ICONSET_DIR/icon_32x32.png"
+cp "$ASSET_DIR/icon_64x64.png"    "$ICONSET_DIR/icon_32x32@2x.png"
+cp "$ASSET_DIR/icon_128x128.png"  "$ICONSET_DIR/icon_128x128.png"
+cp "$ASSET_DIR/icon_256x256.png"  "$ICONSET_DIR/icon_128x128@2x.png"
+cp "$ASSET_DIR/icon_256x256.png"  "$ICONSET_DIR/icon_256x256.png"
+cp "$ASSET_DIR/icon_512x512.png"  "$ICONSET_DIR/icon_256x256@2x.png"
+cp "$ASSET_DIR/icon_512x512.png"  "$ICONSET_DIR/icon_512x512.png"
+cp "$ASSET_DIR/icon_1024x1024.png" "$ICONSET_DIR/icon_512x512@2x.png"
+iconutil -c icns "$ICONSET_DIR" -o "$APP_DIR/Resources/AppIcon.icns"
+rm -rf "$ICONSET_DIR"
+
 # Copy any framework dependencies
 if [ -d ".build/arm64-apple-macosx/debug/PackageFrameworks" ]; then
     mkdir -p "$APP_DIR/Frameworks"
