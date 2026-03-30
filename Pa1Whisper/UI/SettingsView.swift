@@ -191,6 +191,15 @@ struct SettingsView: View {
                 }
             }
 
+            // Text to Speech panel
+            Button {
+                appState.openTTSPanel()
+            } label: {
+                Label("Open Text to Speech", systemImage: "speaker.wave.2.fill")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .buttonStyle(.bordered)
+
             Divider()
 
             // Footer

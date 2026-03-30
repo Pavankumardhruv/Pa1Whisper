@@ -79,6 +79,9 @@ final class AppState {
     private var recordingTimer: Timer?
     private var targetApp: NSRunningApplication?
 
+    let ttsManager = TTSManager()
+    private var ttsPanelController: TTSWindowController?
+
     // MARK: - Computed
 
     var menuBarIcon: String {
@@ -131,6 +134,7 @@ final class AppState {
             }
         }
         flowBarController = FlowBarController(appState: self)
+        ttsPanelController = TTSWindowController(ttsManager: ttsManager)
 
         // Show flow bar immediately (always visible like Wispr Flow)
         if flowBarEnabled {
@@ -376,6 +380,12 @@ final class AppState {
                 recordingState = .idle
             }
         }
+    }
+
+    // MARK: - TTS Panel
+
+    func openTTSPanel() {
+        ttsPanelController?.show()
     }
 
     // MARK: - Refresh
