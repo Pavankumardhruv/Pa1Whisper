@@ -191,14 +191,24 @@ struct SettingsView: View {
                 }
             }
 
-            // Text to Speech panel
-            Button {
-                appState.openTTSPanel()
-            } label: {
-                Label("Open Text to Speech", systemImage: "speaker.wave.2.fill")
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            // Panels
+            HStack(spacing: 8) {
+                Button {
+                    appState.openHistory()
+                } label: {
+                    Label("History", systemImage: "clock.arrow.circlepath")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+
+                Button {
+                    appState.openTTSPanel()
+                } label: {
+                    Label("Text to Speech", systemImage: "speaker.wave.2.fill")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
             }
-            .buttonStyle(.bordered)
 
             Divider()
 
