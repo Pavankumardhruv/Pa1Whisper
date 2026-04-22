@@ -80,7 +80,9 @@ final class AppState {
     private var targetApp: NSRunningApplication?
 
     let ttsManager = TTSManager()
+    let transcriptionHistory = TranscriptionHistory()
     private var ttsPanelController: TTSWindowController?
+    private var historyController: HistoryWindowController?
 
     // MARK: - Computed
 
@@ -135,6 +137,7 @@ final class AppState {
         }
         flowBarController = FlowBarController(appState: self)
         ttsPanelController = TTSWindowController(ttsManager: ttsManager)
+        historyController = HistoryWindowController(history: transcriptionHistory)
 
         // Show flow bar immediately (always visible like Wispr Flow)
         if flowBarEnabled {
@@ -280,6 +283,17 @@ final class AppState {
 
                 lastTranscription = text
 
+                let entry = TranscriptionEntry(
+                    text: text,
+                    rawText: trimmed,
+                    duration: recordingDuration,
+                    language: language,
+                    model: whisperModel,
+                    wasCleanedByLLM: llmCleanupEnabled && ollamaAvailable,
+                    targetApp: targetApp?.localizedName
+                )
+                transcriptionHistory.add(entry)
+
                 if autoPasteEnabled {
                     textInjector?.pasteText(text, targetApp: targetApp)
                 } else {
@@ -382,10 +396,14 @@ final class AppState {
         }
     }
 
-    // MARK: - TTS Panel
+    // MARK: - Panels
 
     func openTTSPanel() {
         ttsPanelController?.show()
+    }
+
+    func openHistory() {
+        historyController?.show()
     }
 
     // MARK: - Refresh
