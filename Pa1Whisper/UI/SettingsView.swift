@@ -144,10 +144,10 @@ struct SettingsView: View {
                 Label("Trigger", systemImage: "keyboard")
                 Spacer()
                 VStack(alignment: .trailing, spacing: 4) {
-                    Text("Hold Right ⌥  Dictation")
+                    Text("Tap Right ⌥  Dictation")
                         .font(.system(.caption, design: .monospaced))
                     if appState.voiceAssistantEnabled {
-                        Text("Hold Left ⌥  Voice Chat")
+                        Text("Tap Left ⌥  Voice Chat")
                             .font(.system(.caption, design: .monospaced))
                             .foregroundStyle(.purple)
                     }

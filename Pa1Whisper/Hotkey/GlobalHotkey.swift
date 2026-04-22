@@ -4,6 +4,8 @@ import ApplicationServices
 final class GlobalHotkey {
     private var globalMonitor: Any?
     private var localMonitor: Any?
+    private var rightActive = false
+    private var leftActive = false
     private var isRightPressed = false
     private var isLeftPressed = false
 
@@ -78,6 +80,11 @@ final class GlobalHotkey {
         }
     }
 
+    func resetToggleState() {
+        rightActive = false
+        leftActive = false
+    }
+
     func unregister() {
         if let globalMonitor {
             NSEvent.removeMonitor(globalMonitor)
@@ -92,21 +99,32 @@ final class GlobalHotkey {
     private func handleFlagsChanged(_ event: NSEvent) {
         let optionPressed = event.modifierFlags.contains(.option)
 
+        // Tap-to-toggle: action fires on key-up (tap completed)
         if event.keyCode == rightOptionKeyCode {
             if optionPressed && !isRightPressed {
                 isRightPressed = true
-                onRightPress()
             } else if !optionPressed && isRightPressed {
                 isRightPressed = false
-                onRightRelease()
+                if !rightActive {
+                    rightActive = true
+                    onRightPress()
+                } else {
+                    rightActive = false
+                    onRightRelease()
+                }
             }
         } else if event.keyCode == leftOptionKeyCode {
             if optionPressed && !isLeftPressed {
                 isLeftPressed = true
-                onLeftPress()
             } else if !optionPressed && isLeftPressed {
                 isLeftPressed = false
-                onLeftRelease()
+                if !leftActive {
+                    leftActive = true
+                    onLeftPress()
+                } else {
+                    leftActive = false
+                    onLeftRelease()
+                }
             }
         }
     }

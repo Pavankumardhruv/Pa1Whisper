@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Free, open-source, offline voice-to-text for macOS.</strong><br>
-  Hold a key, speak, release — your words appear at the cursor. 100% local, nothing leaves your Mac.
+  Tap a key, speak, tap again — your words appear at the cursor. 100% local, nothing leaves your Mac.
 </p>
 
 <p align="center">
@@ -35,7 +35,7 @@ Pa1Whisper is a lightweight macOS menu-bar app that transcribes speech to text e
 
 - **100% Local & Private** — All speech recognition runs on-device. No audio ever leaves your Mac
 - **Works Offline** — After the one-time model download, no internet needed
-- **Hold-to-Talk** — Hold Right Option (⌥), speak, release. Text appears at your cursor
+- **Tap-to-Talk** — Tap Right Option (⌥) to start, speak, tap again to stop. Text appears at your cursor
 - **Works in Any App** — VS Code, Terminal, Chrome, Slack, Notes, Pages — anywhere you type
 - **AI Grammar Cleanup** — Optional local LLM removes filler words, fixes punctuation (via Ollama)
 - **Multiple Whisper Models** — Tiny (39 MB), Base (140 MB), Small (460 MB) — pick your tradeoff
@@ -95,12 +95,12 @@ Enable "Launch at Login" in the Pa1Whisper settings panel to start automatically
 
 ## How It Works
 
-**Hold Right ⌥ (Option)** → speak → release. That's it.
+**Tap Right ⌥ (Option)** → speak → tap again. That's it.
 
 ```
-1. Hold Right ⌥     →  Recording starts, Flow Bar shows "Listening..."
+1. Tap Right ⌥      →  Recording starts, Flow Bar shows "Listening..."
 2. Speak             →  Audio captured locally at 16 kHz mono
-3. Release           →  Audio transcribed by on-device Whisper model
+3. Tap Right ⌥      →  Audio transcribed by on-device Whisper model
 4. Cleanup (opt.)    →  Text cleaned by local LLM (if Ollama enabled)
 5. Paste             →  Text automatically pasted at your cursor
 ```
