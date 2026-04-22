@@ -1,56 +1,59 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="50%" stop-color="#2d2d2d"/>
+      <stop offset="100%" stop-color="#0d0d0d"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#888888"/>
+      <stop offset="30%" stop-color="#ffffff"/>
+      <stop offset="70%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#888888"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
 
-  <!-- Clean off-white background -->
-  <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="#FAFCFF"/>
+  <!-- Background -->
+  <rect width="1024" height="1024" rx="224" ry="224" fill="url(#bg)"/>
 
-  <!-- ── BIRD ── single ink color #2563EB ── -->
+  <!-- Subtle top shine -->
+  <rect width="1024" height="512" rx="224" ry="224" fill="url(#glow)"/>
 
-  <!-- Body: one confident wobbly oval -->
-  <path d="M 645 442
-           C 652 358, 582 284, 496 286
-           C 410 288, 326 354, 324 452
-           C 322 550, 394 598, 508 596
-           C 622 594, 648 526, 645 442 Z"
-        fill="none" stroke="#2563EB" stroke-width="10"
-        stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Speech waveform bars — symmetrical, flowing -->
+  <g transform="translate(512, 512)">
+    <!-- Center bar (tallest) -->
+    <rect x="-12" y="-120" width="24" height="240" rx="12" fill="url(#wave)" opacity="0.95"/>
 
-  <!-- Head: small circle upper-right, overlapping body shoulder -->
-  <path d="M 694 314
-           C 694 368, 652 408, 600 408
-           C 548 408, 506 368, 506 314
-           C 506 260, 548 220, 600 220
-           C 652 220, 694 260, 694 314 Z"
-        fill="none" stroke="#2563EB" stroke-width="10"
-        stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- ±1 -->
+    <rect x="-60" y="-90" width="20" height="180" rx="10" fill="url(#wave)" opacity="0.9"/>
+    <rect x="40" y="-90" width="20" height="180" rx="10" fill="url(#wave)" opacity="0.9"/>
 
-  <!-- Wing: single loose arc across the body -->
-  <path d="M 352 438 C 392 388, 458 364, 526 380"
-        fill="none" stroke="#2563EB" stroke-width="9"
-        stroke-linecap="round"/>
+    <!-- ±2 -->
+    <rect x="-108" y="-130" width="20" height="260" rx="10" fill="url(#wave)" opacity="0.85"/>
+    <rect x="88" y="-130" width="20" height="260" rx="10" fill="url(#wave)" opacity="0.85"/>
 
-  <!-- Tail: two diverging strokes from the left -->
-  <path d="M 326 455 C 244 436, 182 390, 154 332"
-        fill="none" stroke="#2563EB" stroke-width="10"
-        stroke-linecap="round"/>
-  <path d="M 326 492 C 240 478, 172 436, 140 374"
-        fill="none" stroke="#2563EB" stroke-width="8"
-        stroke-linecap="round"/>
+    <!-- ±3 -->
+    <rect x="-156" y="-70" width="18" height="140" rx="9" fill="url(#wave)" opacity="0.75"/>
+    <rect x="138" y="-70" width="18" height="140" rx="9" fill="url(#wave)" opacity="0.75"/>
 
-  <!-- Beak: two short open strokes (singing) -->
-  <path d="M 692 302 L 778 274"
-        fill="none" stroke="#2563EB" stroke-width="9"
-        stroke-linecap="round"/>
-  <path d="M 692 328 L 774 346"
-        fill="none" stroke="#2563EB" stroke-width="9"
-        stroke-linecap="round"/>
+    <!-- ±4 -->
+    <rect x="-202" y="-100" width="18" height="200" rx="9" fill="url(#wave)" opacity="0.65"/>
+    <rect x="184" y="-100" width="18" height="200" rx="9" fill="url(#wave)" opacity="0.65"/>
 
-  <!-- Eye: single filled dot -->
-  <circle cx="638" cy="296" r="14" fill="#2563EB"/>
+    <!-- ±5 -->
+    <rect x="-246" y="-50" width="16" height="100" rx="8" fill="url(#wave)" opacity="0.5"/>
+    <rect x="230" y="-50" width="16" height="100" rx="8" fill="url(#wave)" opacity="0.5"/>
 
-  <!-- ── "Pa1" — bold italic, same blue ── -->
-  <text x="512" y="766"
-        font-family="'Palatino Linotype', 'Palatino', 'Book Antiqua', 'Georgia', serif"
-        font-size="140" font-weight="bold" font-style="italic"
-        fill="#2563EB" text-anchor="middle" letter-spacing="-2">Pa1</text>
+    <!-- ±6 (fading edges) -->
+    <rect x="-288" y="-34" width="14" height="68" rx="7" fill="url(#wave)" opacity="0.35"/>
+    <rect x="274" y="-34" width="14" height="68" rx="7" fill="url(#wave)" opacity="0.35"/>
 
+    <!-- ±7 -->
+    <rect x="-326" y="-20" width="12" height="40" rx="6" fill="url(#wave)" opacity="0.2"/>
+    <rect x="314" y="-20" width="12" height="40" rx="6" fill="url(#wave)" opacity="0.2"/>
+  </g>
 </svg>
