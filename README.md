@@ -10,6 +10,14 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/Pavankumardhruv/Pa1Whisper/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Pavankumardhruv/Pa1Whisper?style=flat-square" alt="License"></a>
+  <img src="https://img.shields.io/badge/platform-macOS%2014%2B-blue?style=flat-square" alt="Platform">
+  <img src="https://img.shields.io/badge/Swift-5.10-orange?style=flat-square&logo=swift&logoColor=white" alt="Swift">
+  <img src="https://img.shields.io/badge/Apple%20Silicon-M1%2FM2%2FM3%2FM4-black?style=flat-square&logo=apple&logoColor=white" alt="Apple Silicon">
+  <img src="https://img.shields.io/badge/100%25-offline-green?style=flat-square" alt="Offline">
+</p>
+
+<p align="center">
   <a href="#installation">Install</a> &bull;
   <a href="#how-it-works">Usage</a> &bull;
   <a href="#features">Features</a> &bull;
