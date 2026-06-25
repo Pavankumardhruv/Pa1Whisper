@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>Free, open-source, offline voice-to-text for macOS.</strong><br>
-  Tap a key, speak, tap again — your words appear at the cursor. 100% local, nothing leaves your Mac.
+  Tap a key, speak, tap again - your words appear at the cursor. 100% local, nothing leaves your Mac.
 </p>
 
 <p align="center">
@@ -23,24 +23,24 @@
 
 ---
 
-Pa1Whisper is a lightweight macOS menu-bar app that transcribes speech to text entirely on your Mac using [WhisperKit](https://github.com/argmaxinc/WhisperKit) (OpenAI Whisper optimized for Apple Silicon). Optional local LLM cleanup via [Ollama](https://ollama.com) fixes grammar and removes filler words — all without an internet connection.
+Pa1Whisper is a lightweight macOS menu-bar app that transcribes speech to text entirely on your Mac using [WhisperKit](https://github.com/argmaxinc/WhisperKit) (OpenAI Whisper optimized for Apple Silicon). Optional local LLM cleanup via [Ollama](https://ollama.com) fixes grammar and removes filler words - all without an internet connection.
 
 **No cloud. No subscription. No data collection. Just fast, accurate voice typing.**
 
 ## Features
 
-- **100% Local & Private** — All speech recognition runs on-device. No audio ever leaves your Mac
-- **Works Offline** — After the one-time model download, no internet needed
-- **Tap-to-Talk** — Tap Right ⌥ to start, speak, tap again to stop. Text appears at your cursor
-- **Works in Any App** — VS Code, Terminal, Chrome, Slack, Notes, Pages — anywhere you type
-- **AI Grammar Cleanup** — Optional local LLM removes filler words and fixes punctuation via Ollama
-- **Transcription History** — Searchable log of all transcriptions with timestamps, duration, and one-click copy
-- **Voice Assistant** — Tap Left ⌥ to ask a question, get a spoken answer (powered by Ollama)
-- **Text to Speech** — Built-in TTS panel with voice selection and speed control
-- **Multiple Whisper Models** — Tiny (39 MB), Base (140 MB), Small (460 MB) — pick your tradeoff
-- **29 Languages** — English, Hindi, Spanish, French, German, Chinese, Japanese, and more
-- **Lightweight** — <100 MB RAM, <1% CPU when idle
-- **Menu Bar App** — Lives in your menu bar, no dock icon clutter
+- **100% Local & Private** - All speech recognition runs on-device. No audio ever leaves your Mac
+- **Works Offline** - After the one-time model download, no internet needed
+- **Tap-to-Talk** - Tap Right ⌥ to start, speak, tap again to stop. Text appears at your cursor
+- **Works in Any App** - VS Code, Terminal, Chrome, Slack, Notes, Pages - anywhere you type
+- **AI Grammar Cleanup** - Optional local LLM removes filler words and fixes punctuation via Ollama
+- **Transcription History** - Searchable log of all transcriptions with timestamps, duration, and one-click copy
+- **Voice Assistant** - Tap Left ⌥ to ask a question, get a spoken answer (powered by Ollama)
+- **Text to Speech** - Built-in TTS panel with voice selection and speed control
+- **Multiple Whisper Models** - Tiny (39 MB), Base (140 MB), Small (460 MB) - pick your tradeoff
+- **29 Languages** - English, Hindi, Spanish, French, German, Chinese, Japanese, and more
+- **Lightweight** - <100 MB RAM, <1% CPU when idle
+- **Menu Bar App** - Lives in your menu bar, no dock icon clutter
 
 ## Pa1Whisper vs Cloud Dictation
 
@@ -65,8 +65,8 @@ First build downloads WhisperKit dependencies (~2 min). Subsequent builds take ~
 
 ### After Launching
 
-1. **Grant Microphone** — prompted automatically on first launch
-2. **Grant Accessibility** — System Settings → Privacy & Security → Accessibility → toggle **ON**
+1. **Grant Microphone** - prompted automatically on first launch
+2. **Grant Accessibility** - System Settings → Privacy & Security → Accessibility → toggle **ON**
 3. The Whisper model downloads automatically on first launch (~140 MB for `base`)
 
 Pa1Whisper lives in your **menu bar** (top-right). Look for the microphone icon.
@@ -83,7 +83,7 @@ Pa1Whisper lives in your **menu bar** (top-right). Look for the microphone icon.
 5. Paste             →  Text automatically pasted at your cursor
 ```
 
-Works in every app — editors, terminals, browsers, chat apps, documents.
+Works in every app - editors, terminals, browsers, chat apps, documents.
 
 ## Whisper Models
 
@@ -110,7 +110,7 @@ Models download once from HuggingFace and are cached locally.
 
 ## Optional: LLM Grammar Cleanup
 
-When enabled, a local LLM cleans up transcriptions — removes "um", "uh", "like", fixes grammar and punctuation — before pasting. Everything stays on your Mac.
+When enabled, a local LLM cleans up transcriptions - removes "um", "uh", "like", fixes grammar and punctuation - before pasting. Everything stays on your Mac.
 
 ```bash
 brew install ollama
@@ -124,20 +124,20 @@ Pa1Whisper auto-detects Ollama. If unavailable, raw Whisper output is used (no e
 ```
 Pa1Whisper.app (menu bar)
 ├── Core
-│   ├── AudioEngine          — AVAudioEngine, 16 kHz mono capture
-│   ├── WhisperTranscriber   — WhisperKit (CoreML + Apple Neural Engine)
-│   ├── LLMCleanup           — Ollama HTTP API (localhost:11434)
-│   ├── TextInjector         — NSPasteboard + CGEvent paste
-│   ├── TranscriptionHistory — Persistent JSON storage in ~/Application Support
-│   ├── VoiceAssistant       — Ollama conversation + TTS response
-│   └── TTSManager           — AVSpeechSynthesizer with voice selection
+│   ├── AudioEngine          - AVAudioEngine, 16 kHz mono capture
+│   ├── WhisperTranscriber   - WhisperKit (CoreML + Apple Neural Engine)
+│   ├── LLMCleanup           - Ollama HTTP API (localhost:11434)
+│   ├── TextInjector         - NSPasteboard + CGEvent paste
+│   ├── TranscriptionHistory - Persistent JSON storage in ~/Application Support
+│   ├── VoiceAssistant       - Ollama conversation + TTS response
+│   └── TTSManager           - AVSpeechSynthesizer with voice selection
 ├── Hotkey
-│   └── GlobalHotkey         — Tap-to-toggle via NSEvent monitors
+│   └── GlobalHotkey         - Tap-to-toggle via NSEvent monitors
 └── UI
-    ├── SettingsView         — Menu bar popover (SwiftUI)
-    ├── FlowBar              — Floating recording indicator with waveform
-    ├── HistoryView          — Searchable transcription log panel
-    └── TTSPanelView         — Text-to-speech interface
+    ├── SettingsView         - Menu bar popover (SwiftUI)
+    ├── FlowBar              - Floating recording indicator with waveform
+    ├── HistoryView          - Searchable transcription log panel
+    └── TTSPanelView         - Text-to-speech interface
 ```
 
 All speech recognition runs locally. The only network calls are:
@@ -148,8 +148,8 @@ All speech recognition runs locally. The only network calls are:
 
 - macOS 14.0 (Sonoma) or later
 - Apple Silicon (M1 / M2 / M3 / M4)
-- Xcode Command Line Tools — `xcode-select --install`
-- Ollama *(optional)* — for AI grammar cleanup and voice assistant
+- Xcode Command Line Tools - `xcode-select --install`
+- Ollama *(optional)* - for AI grammar cleanup and voice assistant
 
 ## Troubleshooting
 
@@ -163,7 +163,7 @@ The Whisper model is still downloading. Check the settings panel for a progress 
 <summary><strong>Text isn't pasting into my app</strong></summary>
 
 - Verify Accessibility permission is granted
-- Some apps block CGEvent paste — turn off "Auto-paste" and use Cmd+V manually
+- Some apps block CGEvent paste - turn off "Auto-paste" and use Cmd+V manually
 </details>
 
 <details>
@@ -189,7 +189,7 @@ open build/Pa1Whisper.app
 tail -f /tmp/pa1whisper.log  # View logs
 ```
 
-Built with Swift 5.10, SwiftUI, and Swift Package Manager. No Xcode project required — builds entirely from the command line.
+Built with Swift 5.10, SwiftUI, and Swift Package Manager. No Xcode project required - builds entirely from the command line.
 
 ## Contributing
 
@@ -202,4 +202,4 @@ Contributions welcome:
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
+MIT - see [LICENSE](LICENSE) for details.
