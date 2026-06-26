@@ -10,7 +10,7 @@ final class FlowBarController {
         self.appState = appState
     }
 
-    /// Show the flow bar (always visible — call on startup)
+    /// Show the flow bar (always visible - call on startup)
     func show() {
         owLog("[FlowBar] show() called, panel exists: \(panel != nil)")
         if panel == nil {
@@ -42,7 +42,7 @@ final class FlowBarController {
 
     /// Show a brief "done" flash, then shrink back to idle pill
     func flashDone() {
-        // Flow bar stays visible — it just animates back to idle state via SwiftUI
+        // Flow bar stays visible - it just animates back to idle state via SwiftUI
         // (recordingState goes back to .idle, FlowBarView reacts)
     }
 

@@ -209,7 +209,7 @@ final class AppState {
     func startRecording() {
         guard recordingState == .idle else { return }
         guard modelLoaded else {
-            owLog("[Pa1Whisper] Cannot record — model not loaded yet")
+            owLog("[Pa1Whisper] Cannot record - model not loaded yet")
             return
         }
 
@@ -314,11 +314,11 @@ final class AppState {
         guard recordingState == .idle else { return }
         guard voiceAssistantEnabled else { return }
         guard modelLoaded else {
-            owLog("[Pa1Whisper] Cannot voice chat — model not loaded yet")
+            owLog("[Pa1Whisper] Cannot voice chat - model not loaded yet")
             return
         }
         guard ollamaAvailable else {
-            owLog("[Pa1Whisper] Cannot voice chat — Ollama not available")
+            owLog("[Pa1Whisper] Cannot voice chat - Ollama not available")
             lastError = "Voice chat requires Ollama"
             return
         }

@@ -25,7 +25,7 @@ final class TTSWindowController {
             backing: .buffered,
             defer: false
         )
-        window.title = "Pa1Whisper — Text to Speech"
+        window.title = "Pa1Whisper - Text to Speech"
         window.center()
         window.isReleasedWhenClosed = false
         window.minSize = NSSize(width: 480, height: 340)

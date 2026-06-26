@@ -99,7 +99,7 @@ struct SettingsView: View {
                     Circle()
                         .fill(appState.ollamaAvailable ? .green : .red)
                         .frame(width: 6, height: 6)
-                        .help(appState.ollamaAvailable ? "Ollama connected" : "Ollama not running — required for voice chat")
+                        .help(appState.ollamaAvailable ? "Ollama connected" : "Ollama not running - required for voice chat")
                 }
                 Toggle("", isOn: $appState.voiceAssistantEnabled)
                     .toggleStyle(.switch)

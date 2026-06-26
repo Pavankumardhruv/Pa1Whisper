@@ -58,7 +58,7 @@ final class GlobalHotkey {
 
         owLog("[GlobalHotkey] Accessibility NOT granted (AXUIElement=\(result.rawValue), AXIsProcessTrusted=false)")
 
-        // Not granted — show prompt if requested
+        // Not granted - show prompt if requested
         if prompt {
             let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true] as CFDictionary
             _ = AXIsProcessTrustedWithOptions(options)

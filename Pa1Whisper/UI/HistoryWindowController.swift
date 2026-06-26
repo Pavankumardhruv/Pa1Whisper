@@ -25,7 +25,7 @@ final class HistoryWindowController {
             backing: .buffered,
             defer: false
         )
-        window.title = "Pa1Whisper — Transcription History"
+        window.title = "Pa1Whisper - Transcription History"
         window.center()
         window.isReleasedWhenClosed = false
         window.minSize = NSSize(width: 480, height: 360)

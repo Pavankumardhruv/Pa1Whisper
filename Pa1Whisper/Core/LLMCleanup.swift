@@ -8,7 +8,7 @@ final class LLMCleanup: Sendable {
         Fix this voice dictation transcript. Rules:
         - Remove filler words (um, uh, like, you know, so, basically, actually, I mean)
         - Fix grammar, spelling, and punctuation
-        - Keep the EXACT meaning and tone — do NOT rephrase or add words
+        - Keep the EXACT meaning and tone - do NOT rephrase or add words
         - If it's code-related, preserve technical terms, variable names, function names exactly
         - Output ONLY the cleaned text, nothing else
         - Do NOT add quotes around the output
